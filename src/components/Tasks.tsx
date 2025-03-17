@@ -1,4 +1,4 @@
-import { TaskType } from './Todolist'
+import { TaskType } from '../App'
 
 type PropsType = Omit<TaskType, 'id'>
 

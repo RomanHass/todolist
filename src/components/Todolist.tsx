@@ -1,11 +1,6 @@
+import { TaskType } from '../App'
 import { Button } from './Button'
 import { Task } from './Tasks'
-
-export type TaskType = {
-  id: number
-  title: string
-  isDone: boolean
-}
 
 type PropsType = {
   title: string
@@ -24,7 +19,9 @@ export const Todolist = ({ title, tasks }: PropsType) => {
         <input />
         <Button title={'+'} />
       </div>
-      <ul>{tasksForTodolist}</ul>
+      <ul style={{ paddingLeft: 0, listStyleType: 'none' }}>
+        {tasks.length === 0 ? <p>Тасок нет</p> : tasksForTodolist}
+      </ul>
       <div>
         <Button title={'All'} />
         <Button title={'Active'} />
