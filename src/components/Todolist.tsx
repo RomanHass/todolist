@@ -1,7 +1,7 @@
 import { Button } from './Button'
 import { Task } from './Tasks'
 
-type TaskType = {
+export type TaskType = {
   id: number
   title: string
   isDone: boolean
@@ -14,7 +14,7 @@ type PropsType = {
 
 export const Todolist = ({ title, tasks }: PropsType) => {
   const tasksForTodolist = tasks.map(t => {
-    return <Task isDone={t.isDone} title={t.title} />
+    return <Task key={t.id} isDone={t.isDone} title={t.title} />
   })
 
   return (

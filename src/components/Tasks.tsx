@@ -1,7 +1,6 @@
-type PropsType = {
-  title: string
-  isDone: boolean
-}
+import { TaskType } from './Todolist'
+
+type PropsType = Omit<TaskType, 'id'>
 
 export const Task = ({ isDone, title }: PropsType) => {
   return (
