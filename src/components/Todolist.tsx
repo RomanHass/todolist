@@ -5,11 +5,22 @@ import { Task } from './Tasks'
 type PropsType = {
   title: string
   tasks: TaskType[]
+  removeTask: (id: number) => void
 }
 
-export const Todolist = ({ title, tasks }: PropsType) => {
+export const Todolist = ({ title, tasks, removeTask }: PropsType) => {
+  // const removeTaskHandler = (id: number) => {
+  //   removeTask(id)
+  // }
+
   const tasksForTodolist = tasks.map(t => {
-    return <Task key={t.id} isDone={t.isDone} title={t.title} />
+    return (
+      <div style={{ display: 'flex' }}>
+        <Task key={t.id} isDone={t.isDone} title={t.title} />
+        {/* <Button onClick={removeTaskHandler} title={'x'} /> */}
+        <Button onClick={() => removeTask(t.id)} title={'x'} />
+      </div>
+    )
   })
 
   return (
