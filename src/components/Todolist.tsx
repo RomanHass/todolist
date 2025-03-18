@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { FilterValuesType, TaskType } from '../App'
 import { Button } from './Button'
 import { Task } from './Tasks'
@@ -6,11 +7,31 @@ type PropsType = {
   title: string
   tasks: TaskType[]
   removeTask: (id: number) => void
-  changeFilter: (title: FilterValuesType) => void
 }
 
-export const Todolist = ({ title, tasks, removeTask, changeFilter }: PropsType) => {
-  const tasksForTodolist = tasks.map(t => {
+export const Todolist = ({ title, tasks, removeTask }: PropsType) => {
+  const [filter, setFilter] = useState('All')
+
+  const changeFilter = (title: FilterValuesType) => {
+    setFilter(title)
+  }
+
+  const getFilteredTasks = () => {
+    switch (filter) {
+      case 'Completed': {
+        return tasks.filter(t => t.isDone)
+      }
+      case 'Active': {
+        return tasks.filter(t => !t.isDone)
+      }
+      default:
+        return tasks
+    }
+  }
+
+  let filteredTasks = getFilteredTasks()
+
+  const tasksForTodolist = filteredTasks.map(t => {
     return (
       <div style={{ display: 'flex' }}>
         <Task key={t.id} isDone={t.isDone} title={t.title} />
