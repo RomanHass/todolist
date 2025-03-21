@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import { FilterValuesType, TaskType } from '../App'
 import { Button } from './Button'
 import { Task } from './Tasks'
@@ -6,11 +6,14 @@ import { Task } from './Tasks'
 type PropsType = {
   title: string
   tasks: TaskType[]
-  removeTask: (id: number) => void
+  removeTask: (id: string) => void
+  addTask: (title: string) => void
 }
 
-export const Todolist = ({ title, tasks, removeTask }: PropsType) => {
+export const Todolist = ({ title, tasks, removeTask, addTask }: PropsType) => {
   const [filter, setFilter] = useState('All')
+
+  const inputRef = useRef<HTMLInputElement>(null)
 
   const changeFilter = (title: FilterValuesType) => {
     setFilter(title)
@@ -44,8 +47,16 @@ export const Todolist = ({ title, tasks, removeTask }: PropsType) => {
     <div>
       <h3>{title}</h3>
       <div>
-        <input />
-        <Button title={'+'} />
+        <input ref={inputRef} />
+        <Button
+          title={'+'}
+          onClick={() => {
+            if (inputRef.current) {
+              addTask(inputRef.current.value)
+              inputRef.current.value = ''
+            }
+          }}
+        />
       </div>
       <ul style={{ paddingLeft: 0, listStyleType: 'none' }}>
         {tasks.length === 0 ? <p>Тасок нет</p> : tasksForTodolist}
