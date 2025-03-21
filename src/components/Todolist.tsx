@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react'
+import { useState } from 'react'
 import { FilterValuesType, TaskType } from '../App'
 import { Button } from './Button'
 import { Task } from './Tasks'
@@ -12,8 +12,7 @@ type PropsType = {
 
 export const Todolist = ({ title, tasks, removeTask, addTask }: PropsType) => {
   const [filter, setFilter] = useState('All')
-
-  const inputRef = useRef<HTMLInputElement>(null)
+  let [inputValue, setInputValue] = useState('')
 
   const changeFilter = (title: FilterValuesType) => {
     setFilter(title)
@@ -47,14 +46,21 @@ export const Todolist = ({ title, tasks, removeTask, addTask }: PropsType) => {
     <div>
       <h3>{title}</h3>
       <div>
-        <input ref={inputRef} />
+        <input
+          value={inputValue}
+          onChange={e => setInputValue(e.currentTarget.value)}
+          onKeyUp={e => {
+            if (e.key === 'Enter') {
+              addTask(e.currentTarget.value)
+              setInputValue('')
+            }
+          }}
+        />
         <Button
           title={'+'}
           onClick={() => {
-            if (inputRef.current) {
-              addTask(inputRef.current.value)
-              inputRef.current.value = ''
-            }
+            addTask(inputValue)
+            setInputValue('')
           }}
         />
       </div>
