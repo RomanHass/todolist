@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, KeyboardEvent, ChangeEvent } from 'react'
 import { FilterValuesType, TaskType } from '../App'
 import { Button } from './Button'
 import { Task } from './Tasks'
@@ -11,19 +11,34 @@ type PropsType = {
 }
 
 export const Todolist = ({ title, tasks, removeTask, addTask }: PropsType) => {
-  const [filter, setFilter] = useState('All')
+  const [filter, setFilter] = useState('all')
   let [inputValue, setInputValue] = useState('')
 
-  const changeFilter = (title: FilterValuesType) => {
+  const addTaskHandler = (value: string) => {
+    addTask(value)
+    setInputValue('')
+  }
+
+  const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    setInputValue(e.currentTarget.value)
+  }
+
+  const onKeyUpHandler = (e: KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      addTaskHandler(e.currentTarget.value)
+    }
+  }
+
+  const changeFilterHandler = (title: FilterValuesType) => {
     setFilter(title)
   }
 
   const getFilteredTasks = () => {
     switch (filter) {
-      case 'Completed': {
+      case 'completed': {
         return tasks.filter(t => t.isDone)
       }
-      case 'Active': {
+      case 'active': {
         return tasks.filter(t => !t.isDone)
       }
       default:
@@ -34,10 +49,13 @@ export const Todolist = ({ title, tasks, removeTask, addTask }: PropsType) => {
   let filteredTasks = getFilteredTasks()
 
   const tasksForTodolist = filteredTasks.map(t => {
+    const removeTaskHandler = () => {
+      removeTask(t.id)
+    }
     return (
       <div style={{ display: 'flex' }}>
         <Task key={t.id} isDone={t.isDone} title={t.title} />
-        <Button onClick={() => removeTask(t.id)} title={'x'} />
+        <Button onClick={removeTaskHandler} title={'x'} />
       </div>
     )
   })
@@ -46,31 +64,23 @@ export const Todolist = ({ title, tasks, removeTask, addTask }: PropsType) => {
     <div>
       <h3>{title}</h3>
       <div>
-        <input
-          value={inputValue}
-          onChange={e => setInputValue(e.currentTarget.value)}
-          onKeyUp={e => {
-            if (e.key === 'Enter') {
-              addTask(e.currentTarget.value)
-              setInputValue('')
-            }
-          }}
-        />
+        <input value={inputValue} onChange={onChangeHandler} onKeyUp={onKeyUpHandler} />
         <Button
           title={'+'}
           onClick={() => {
-            addTask(inputValue)
-            setInputValue('')
+            addTaskHandler(inputValue)
           }}
         />
       </div>
-      <ul style={{ paddingLeft: 0, listStyleType: 'none' }}>
-        {tasks.length === 0 ? <p>Тасок нет</p> : tasksForTodolist}
-      </ul>
+      {tasks.length === 0 ? (
+        <p>Тасок нет</p>
+      ) : (
+        <ul style={{ paddingLeft: 0, listStyleType: 'none' }}>{tasksForTodolist}</ul>
+      )}
       <div>
-        <Button onClick={() => changeFilter('All')} title={'All'} />
-        <Button onClick={() => changeFilter('Active')} title={'Active'} />
-        <Button onClick={() => changeFilter('Completed')} title={'Completed'} />
+        <Button onClick={() => changeFilterHandler('all')} title={'All'} />
+        <Button onClick={() => changeFilterHandler('active')} title={'Active'} />
+        <Button onClick={() => changeFilterHandler('completed')} title={'Completed'} />
       </div>
     </div>
   )
