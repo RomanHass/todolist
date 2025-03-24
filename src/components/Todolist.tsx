@@ -37,6 +37,10 @@ export const Todolist = ({ title, tasks, removeTask, addTask, changeTaskStatus }
     }
   }
 
+  const changeTaskStatusHandler = (taskId: string, isDone: boolean) => {
+    changeTaskStatus(taskId, isDone)
+  }
+
   const changeFilterHandler = (filter: FilterValuesType) => {
     setFilter(filter)
   }
@@ -59,10 +63,6 @@ export const Todolist = ({ title, tasks, removeTask, addTask, changeTaskStatus }
   const tasksForTodolist = filteredTasks.map(t => {
     const removeTaskHandler = () => {
       removeTask(t.id)
-    }
-
-    const changeTaskStatusHandler = (taskId: string, isDone: boolean) => {
-      changeTaskStatus(taskId, isDone)
     }
 
     return (
