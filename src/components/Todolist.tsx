@@ -8,9 +8,10 @@ type PropsType = {
   tasks: TaskType[]
   removeTask: (id: string) => void
   addTask: (title: string) => void
+  changeTaskStatus: (id: string, isDone: boolean) => void
 }
 
-export const Todolist = ({ title, tasks, removeTask, addTask }: PropsType) => {
+export const Todolist = ({ title, tasks, removeTask, addTask, changeTaskStatus }: PropsType) => {
   const [filter, setFilter] = useState('all')
   let [inputValue, setInputValue] = useState('')
 
@@ -19,7 +20,7 @@ export const Todolist = ({ title, tasks, removeTask, addTask }: PropsType) => {
     setInputValue('')
   }
 
-  const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+  const onChangeTaskTitleHandler = (e: ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.currentTarget.value)
   }
 
@@ -52,9 +53,14 @@ export const Todolist = ({ title, tasks, removeTask, addTask }: PropsType) => {
     const removeTaskHandler = () => {
       removeTask(t.id)
     }
+
+    const changeTaskStatusHandler = (taskId: string, isDone: boolean) => {
+      changeTaskStatus(taskId, isDone)
+    }
+
     return (
-      <div style={{ display: 'flex' }}>
-        <Task key={t.id} isDone={t.isDone} title={t.title} />
+      <div key={t.id} style={{ display: 'flex' }}>
+        <Task id={t.id} isDone={t.isDone} title={t.title} onChange={changeTaskStatusHandler} />
         <Button onClick={removeTaskHandler} title={'x'} />
       </div>
     )
@@ -64,7 +70,7 @@ export const Todolist = ({ title, tasks, removeTask, addTask }: PropsType) => {
     <div>
       <h3>{title}</h3>
       <div>
-        <input value={inputValue} onChange={onChangeHandler} onKeyUp={onKeyUpHandler} />
+        <input value={inputValue} onChange={onChangeTaskTitleHandler} onKeyUp={onKeyUpHandler} />
         <Button
           title={'+'}
           onClick={() => {
