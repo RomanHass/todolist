@@ -13,8 +13,8 @@ type PropsType = {
 
 export const Todolist = ({ title, tasks, removeTask, addTask, changeTaskStatus }: PropsType) => {
   const [filter, setFilter] = useState('all')
-  let [inputValue, setInputValue] = useState('')
-  let [error, setError] = useState<null | string>(null)
+  const [inputValue, setInputValue] = useState('')
+  const [error, setError] = useState<null | string>(null)
 
   const addTaskHandler = (value: string) => {
     const trimmedValue = value.trim()
@@ -37,8 +37,8 @@ export const Todolist = ({ title, tasks, removeTask, addTask, changeTaskStatus }
     }
   }
 
-  const changeFilterHandler = (title: FilterValuesType) => {
-    setFilter(title)
+  const changeFilterHandler = (filter: FilterValuesType) => {
+    setFilter(filter)
   }
 
   const getFilteredTasks = () => {
@@ -97,9 +97,21 @@ export const Todolist = ({ title, tasks, removeTask, addTask, changeTaskStatus }
         <ul style={{ paddingLeft: 0, listStyleType: 'none' }}>{tasksForTodolist}</ul>
       )}
       <div>
-        <Button onClick={() => changeFilterHandler('all')} title={'All'} />
-        <Button onClick={() => changeFilterHandler('active')} title={'Active'} />
-        <Button onClick={() => changeFilterHandler('completed')} title={'Completed'} />
+        <Button
+          className={filter === 'all' ? 'active-filter' : ''}
+          onClick={() => changeFilterHandler('all')}
+          title={'All'}
+        />
+        <Button
+          className={filter === 'active' ? 'active-filter' : ''}
+          onClick={() => changeFilterHandler('active')}
+          title={'Active'}
+        />
+        <Button
+          className={filter === 'completed' ? 'active-filter' : ''}
+          onClick={() => changeFilterHandler('completed')}
+          title={'Completed'}
+        />
       </div>
     </div>
   )
