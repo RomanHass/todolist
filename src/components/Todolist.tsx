@@ -67,7 +67,13 @@ export const Todolist = ({ title, tasks, removeTask, addTask, changeTaskStatus }
 
     return (
       <div key={t.id} style={{ display: 'flex' }}>
-        <Task id={t.id} isDone={t.isDone} title={t.title} onChange={changeTaskStatusHandler} />
+        <Task
+          className={t.isDone ? 'is-done' : ''}
+          id={t.id}
+          isDone={t.isDone}
+          title={t.title}
+          onChange={changeTaskStatusHandler}
+        />
         <Button onClick={removeTaskHandler} title={'x'} />
       </div>
     )
