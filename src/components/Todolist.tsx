@@ -10,9 +10,9 @@ type PropsType = {
   title: string
   tasks: TaskType[]
   filter: FilterValuesType
-  removeTask: (id: string) => void
-  addTask: (title: string) => void
-  changeTaskStatus: (id: string, isDone: boolean) => void
+  removeTask: (todolistId: string, taskId: string) => void
+  addTask: (todolistId: string, title: string) => void
+  changeTaskStatus: (todolistId: string, taskId: string, isDone: boolean) => void
   changeTodolistFilter: (todolistId: string, newFilterValue: FilterValuesType) => void
 }
 
@@ -32,7 +32,7 @@ export const Todolist = ({
   const addTaskHandler = (value: string) => {
     const trimmedValue = value.trim()
     if (trimmedValue) {
-      addTask(trimmedValue)
+      addTask(todolistId, trimmedValue)
       setInputValue('')
     } else {
       setError('Title is required!')
@@ -50,8 +50,8 @@ export const Todolist = ({
     }
   }
 
-  const changeTaskStatusHandler = (taskId: string, isDone: boolean) => {
-    changeTaskStatus(taskId, isDone)
+  const changeTaskStatusHandler = (todolistId: string, taskId: string, isDone: boolean) => {
+    changeTaskStatus(todolistId, taskId, isDone)
   }
 
   const changeFilterHandler = (newFilerValue: FilterValuesType) => {
@@ -75,7 +75,7 @@ export const Todolist = ({
 
   const tasksForTodolist = filteredTasks.map(t => {
     const removeTaskHandler = () => {
-      removeTask(t.id)
+      removeTask(todolistId, t.id)
     }
 
     return (
@@ -83,6 +83,7 @@ export const Todolist = ({
         <Task
           className={t.isDone ? 'is-done' : ''}
           id={t.id}
+          todolistId={todolistId}
           isDone={t.isDone}
           title={t.title}
           onChange={changeTaskStatusHandler}
@@ -95,6 +96,7 @@ export const Todolist = ({
   return (
     <div>
       <h3>{title}</h3>
+
       <div>
         <input
           className={error ? 'error' : ''}

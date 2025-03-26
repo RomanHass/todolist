@@ -16,28 +16,37 @@ export type TaskType = {
 }
 
 export const App = () => {
-  const [tasks, setTasks] = useState<TaskType[]>([
-    { id: v1(), title: 'HTML&CSS', isDone: true },
-    { id: v1(), title: 'JS', isDone: true },
-    { id: v1(), title: 'ReactJS', isDone: false },
-  ])
+  const todolistId1 = v1()
+  const todolistId2 = v1()
 
   const [todolists, setTodolists] = useState<TodolistType[]>([
-    { id: v1(), title: 'What to learn', filter: 'all' },
-    { id: v1(), title: 'What to buy', filter: 'all' },
+    { id: todolistId1, title: 'What to learn', filter: 'all' },
+    { id: todolistId2, title: 'What to buy', filter: 'all' },
   ])
 
-  const removeTask = (taskId: string) => {
-    setTasks(tasks.filter(t => t.id !== taskId))
+  const [tasks, setTasks] = useState({
+    [todolistId1]: [
+      { id: v1(), title: 'HTML&CSS', isDone: true },
+      { id: v1(), title: 'JS', isDone: true },
+      { id: v1(), title: 'ReactJS', isDone: false },
+    ],
+    [todolistId2]: [
+      { id: v1(), title: 'Rest API', isDone: true },
+      { id: v1(), title: 'GraphQL', isDone: false },
+    ],
+  })
+
+  const removeTask = (todolistId: string, taskId: string) => {
+    setTasks({ ...tasks, [todolistId]: tasks[todolistId].filter(t => t.id !== taskId) })
   }
 
-  const addTask = (title: string) => {
-    const newTask = { id: v1(), title, isDone: false }
-    setTasks([newTask, ...tasks])
+  const addTask = (todolistId: string, title: string) => {
+    const newTask: TaskType = { id: v1(), title, isDone: false }
+    setTasks({ ...tasks, [todolistId]: [newTask, ...tasks[todolistId]] })
   }
 
-  const changeTaskStatus = (taskId: string, isDone: boolean) => {
-    setTasks(tasks.map(t => (t.id === taskId ? { ...t, isDone } : t)))
+  const changeTaskStatus = (todolistId: string, taskId: string, isDone: boolean) => {
+    setTasks({ ...tasks, [todolistId]: tasks[todolistId].map(t => (t.id === taskId ? { ...t, isDone } : t)) })
   }
 
   const changeTodolistFilter = (todolistId: string, newFilterValue: FilterValuesType) => {
@@ -46,19 +55,22 @@ export const App = () => {
 
   return (
     <div className="app">
-      {todolists.map(tl => (
-        <Todolist
-          key={tl.id}
-          todolistId={tl.id}
-          title={tl.title}
-          tasks={tasks}
-          filter={tl.filter}
-          removeTask={removeTask}
-          addTask={addTask}
-          changeTaskStatus={changeTaskStatus}
-          changeTodolistFilter={changeTodolistFilter}
-        />
-      ))}
+      {todolists.map(tl => {
+        let tasksForTodolist = tasks[tl.id]
+        return (
+          <Todolist
+            key={tl.id}
+            todolistId={tl.id}
+            title={tl.title}
+            tasks={tasksForTodolist}
+            filter={tl.filter}
+            removeTask={removeTask}
+            addTask={addTask}
+            changeTaskStatus={changeTaskStatus}
+            changeTodolistFilter={changeTodolistFilter}
+          />
+        )
+      })}
     </div>
   )
 }
