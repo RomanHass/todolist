@@ -38,6 +38,7 @@ export const App = () => {
 
   const removeTodolist = (todolistId: string) => {
     setTodolists(todolists.filter(tl => tl.id !== todolistId))
+    delete tasks[todolistId]
   }
 
   const removeTask = (todolistId: string, taskId: string) => {
