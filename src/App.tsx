@@ -36,6 +36,10 @@ export const App = () => {
     ],
   })
 
+  const removeTodolist = (todolistId: string) => {
+    setTodolists(todolists.filter(tl => tl.id !== todolistId))
+  }
+
   const removeTask = (todolistId: string, taskId: string) => {
     setTasks({ ...tasks, [todolistId]: tasks[todolistId].filter(t => t.id !== taskId) })
   }
@@ -64,6 +68,7 @@ export const App = () => {
             title={tl.title}
             tasks={tasksForTodolist}
             filter={tl.filter}
+            removeTodolist={removeTodolist}
             removeTask={removeTask}
             addTask={addTask}
             changeTaskStatus={changeTaskStatus}

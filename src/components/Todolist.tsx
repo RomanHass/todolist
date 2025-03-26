@@ -10,6 +10,7 @@ type PropsType = {
   title: string
   tasks: TaskType[]
   filter: FilterValuesType
+  removeTodolist: (todolistId: string) => void
   removeTask: (todolistId: string, taskId: string) => void
   addTask: (todolistId: string, title: string) => void
   changeTaskStatus: (todolistId: string, taskId: string, isDone: boolean) => void
@@ -21,6 +22,7 @@ export const Todolist = ({
   title,
   tasks,
   filter,
+  removeTodolist,
   removeTask,
   addTask,
   changeTaskStatus,
@@ -28,6 +30,10 @@ export const Todolist = ({
 }: PropsType) => {
   const [inputValue, setInputValue] = useState('')
   const [error, setError] = useState<null | string>(null)
+
+  const removeTodolistHandler = () => {
+    removeTodolist(todolistId)
+  }
 
   const addTaskHandler = (value: string) => {
     const trimmedValue = value.trim()
@@ -95,8 +101,10 @@ export const Todolist = ({
 
   return (
     <div>
-      <h3>{title}</h3>
-
+      <div style={{ display: 'flex', alignItems: 'center', columnGap: '10px' }}>
+        <h3>{title}</h3>
+        <Button onClick={removeTodolistHandler} title={'x'} />
+      </div>
       <div>
         <input
           className={error ? 'error' : ''}
