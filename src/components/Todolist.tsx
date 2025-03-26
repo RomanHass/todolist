@@ -6,7 +6,7 @@ import { Task } from './Tasks'
 export type FilterValuesType = 'all' | 'active' | 'completed'
 
 type PropsType = {
-  id: string
+  todolistId: string
   title: string
   tasks: TaskType[]
   filter: FilterValuesType
@@ -17,7 +17,7 @@ type PropsType = {
 }
 
 export const Todolist = ({
-  id,
+  todolistId,
   title,
   tasks,
   filter,
@@ -55,7 +55,7 @@ export const Todolist = ({
   }
 
   const changeFilterHandler = (newFilerValue: FilterValuesType) => {
-    changeTodolistFilter(id, newFilerValue)
+    changeTodolistFilter(todolistId, newFilerValue)
   }
 
   const getFilteredTasks = () => {

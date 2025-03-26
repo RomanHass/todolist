@@ -49,7 +49,7 @@ export const App = () => {
       {todolists.map(tl => (
         <Todolist
           key={tl.id}
-          id={tl.id}
+          todolistId={tl.id}
           title={tl.title}
           tasks={tasks}
           filter={tl.filter}
