@@ -1,18 +1,31 @@
 import { useState, KeyboardEvent, ChangeEvent } from 'react'
-import { FilterValuesType, TaskType } from '../App'
+import { TaskType } from '../App'
 import { Button } from './Button'
 import { Task } from './Tasks'
 
+export type FilterValuesType = 'all' | 'active' | 'completed'
+
 type PropsType = {
+  id: string
   title: string
   tasks: TaskType[]
+  filter: FilterValuesType
   removeTask: (id: string) => void
   addTask: (title: string) => void
   changeTaskStatus: (id: string, isDone: boolean) => void
+  changeTodolistFilter: (todolistId: string, newFilterValue: FilterValuesType) => void
 }
 
-export const Todolist = ({ title, tasks, removeTask, addTask, changeTaskStatus }: PropsType) => {
-  const [filter, setFilter] = useState('all')
+export const Todolist = ({
+  id,
+  title,
+  tasks,
+  filter,
+  removeTask,
+  addTask,
+  changeTaskStatus,
+  changeTodolistFilter,
+}: PropsType) => {
   const [inputValue, setInputValue] = useState('')
   const [error, setError] = useState<null | string>(null)
 
@@ -41,8 +54,8 @@ export const Todolist = ({ title, tasks, removeTask, addTask, changeTaskStatus }
     changeTaskStatus(taskId, isDone)
   }
 
-  const changeFilterHandler = (filter: FilterValuesType) => {
-    setFilter(filter)
+  const changeFilterHandler = (newFilerValue: FilterValuesType) => {
+    changeTodolistFilter(id, newFilerValue)
   }
 
   const getFilteredTasks = () => {
