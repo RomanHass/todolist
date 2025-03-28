@@ -1,4 +1,3 @@
-import { useState, KeyboardEvent, ChangeEvent } from 'react'
 import { TaskType } from '../App'
 import { Button } from './Button'
 import { Task } from './Tasks'
@@ -13,7 +12,7 @@ type PropsType = {
   filter: FilterValuesType
   removeTodolist: (todolistId: string) => void
   removeTask: (todolistId: string, taskId: string) => void
-  addTask: (todolistId: string, title: string) => void
+  addItem: (todolistId: string, title: string) => void
   changeTaskStatus: (todolistId: string, taskId: string, isDone: boolean) => void
   changeTodolistFilter: (todolistId: string, newFilterValue: FilterValuesType) => void
 }
@@ -25,7 +24,7 @@ export const Todolist = ({
   filter,
   removeTodolist,
   removeTask,
-  addTask,
+  addItem,
   changeTaskStatus,
   changeTodolistFilter,
 }: PropsType) => {
@@ -35,6 +34,10 @@ export const Todolist = ({
 
   const changeTaskStatusHandler = (todolistId: string, taskId: string, isDone: boolean) => {
     changeTaskStatus(todolistId, taskId, isDone)
+  }
+
+  const addTaskHandler = (title: string) => {
+    addItem(todolistId, title)
   }
 
   const changeFilterHandler = (newFilerValue: FilterValuesType) => {
@@ -82,7 +85,7 @@ export const Todolist = ({
         <h3>{title}</h3>
         <Button onClick={removeTodolistHandler} title={'x'} />
       </div>
-      <AddItemForm todolistId={todolistId} addTask={addTask} />
+      <AddItemForm addItem={addTaskHandler} />
       {tasks.length === 0 ? (
         <p>Тасок нет</p>
       ) : (

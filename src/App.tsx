@@ -23,6 +23,7 @@ export const App = () => {
   const [todolists, setTodolists] = useState<TodolistType[]>([
     { id: todolistId1, title: 'What to learn', filter: 'all' },
     { id: todolistId2, title: 'What to buy', filter: 'all' },
+    // { id: todolistId2, title: 'What to buy', filter: 'all' },
   ])
 
   const [tasks, setTasks] = useState({
@@ -36,6 +37,13 @@ export const App = () => {
       { id: v1(), title: 'GraphQL', isDone: false },
     ],
   })
+
+  const addTodolist = (title: string) => {
+    const todolistId = v1()
+    const newTodolist: TodolistType = { id: todolistId, title, filter: 'all' }
+    setTodolists([newTodolist, ...todolists])
+    setTasks({ ...tasks, [todolistId]: [] })
+  }
 
   const removeTodolist = (todolistId: string) => {
     setTodolists(todolists.filter(tl => tl.id !== todolistId))
@@ -61,6 +69,10 @@ export const App = () => {
 
   return (
     <div className="app">
+      <div>
+        <h3>Добавить тудулист:</h3>
+        <AddItemForm addItem={addTodolist} />
+      </div>
       {todolists.map(tl => {
         let tasksForTodolist = tasks[tl.id]
         return (
@@ -72,7 +84,7 @@ export const App = () => {
             filter={tl.filter}
             removeTodolist={removeTodolist}
             removeTask={removeTask}
-            addTask={addTask}
+            addItem={addTask}
             changeTaskStatus={changeTaskStatus}
             changeTodolistFilter={changeTodolistFilter}
           />
