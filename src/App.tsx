@@ -2,6 +2,7 @@ import { useState } from 'react'
 import './App.css'
 import { FilterValuesType, Todolist } from './components/Todolist'
 import { v1 } from 'uuid'
+import { AddItemForm } from './components/AddItemForm'
 
 export type TodolistType = {
   id: string
