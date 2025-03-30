@@ -1,8 +1,11 @@
 import { TaskType } from '../App'
-import { Button } from './Button'
+// import { Button } from './Button'
 import { Task } from './Tasks'
 import { AddItemForm } from './AddItemForm'
 import { EditableSpan } from './EditableSpan'
+import Button from '@mui/material/Button'
+import { IconButton, List } from '@mui/material'
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
 
 export type FilterValuesType = 'all' | 'active' | 'completed'
 
@@ -74,18 +77,17 @@ export const Todolist = ({
     }
 
     return (
-      <div key={t.id} style={{ display: 'flex' }}>
-        <Task
-          className={t.isDone ? 'is-done' : ''}
-          id={t.id}
-          todolistId={todolistId}
-          isDone={t.isDone}
-          title={t.title}
-          onChange={changeTaskStatusHandler}
-          updateTaskTitle={updateTaskTitle}
-        />
-        <Button onClick={removeTaskHandler} title={'x'} />
-      </div>
+      <Task
+        key={t.id}
+        id={t.id}
+        className={t.isDone ? 'is-done' : ''}
+        todolistId={todolistId}
+        isDone={t.isDone}
+        title={t.title}
+        onChange={changeTaskStatusHandler}
+        updateTaskTitle={updateTaskTitle}
+        removeTask={removeTaskHandler}
+      />
     )
   })
 
@@ -95,30 +97,34 @@ export const Todolist = ({
         <h3>
           <EditableSpan oldTitle={title} updateItemTitle={updateItemTitleHandler} className={'title'} />
         </h3>
-        <Button onClick={removeTodolistHandler} title={'x'} />
+        <IconButton onClick={removeTodolistHandler}>
+          <DeleteForeverIcon />
+        </IconButton>
       </div>
       <AddItemForm addItem={addTaskHandler} />
-      {tasks.length === 0 ? (
-        <p>Тасок нет</p>
-      ) : (
-        <ul style={{ paddingLeft: 0, listStyleType: 'none' }}>{tasksForTodolist}</ul>
-      )}
+      {tasks.length === 0 ? <p>Тасок нет</p> : <List>{tasksForTodolist}</List>}
       <div>
         <Button
-          className={filter === 'all' ? 'active-filter' : ''}
+          variant="contained"
+          color={filter === 'all' ? 'secondary' : 'primary'}
           onClick={() => changeFilterHandler('all')}
-          title={'All'}
-        />
+        >
+          All
+        </Button>
         <Button
-          className={filter === 'active' ? 'active-filter' : ''}
+          variant="contained"
+          color={filter === 'active' ? 'secondary' : 'primary'}
           onClick={() => changeFilterHandler('active')}
-          title={'Active'}
-        />
+        >
+          Active
+        </Button>
         <Button
-          className={filter === 'completed' ? 'active-filter' : ''}
+          variant="contained"
+          color={filter === 'completed' ? 'secondary' : 'primary'}
           onClick={() => changeFilterHandler('completed')}
-          title={'Completed'}
-        />
+        >
+          Completed
+        </Button>
       </div>
     </div>
   )

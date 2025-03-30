@@ -1,5 +1,7 @@
+import Button from '@mui/material/Button'
 import { ChangeEvent, KeyboardEvent, useState } from 'react'
-import { Button } from './Button'
+import AddIcon from '@mui/icons-material/Add'
+import { TextField } from '@mui/material'
 
 export type PropsType = {
   addItem: (title: string) => void
@@ -32,19 +34,20 @@ export const AddItemForm = ({ addItem }: PropsType) => {
 
   return (
     <div>
-      <input
-        className={error ? 'error' : ''}
+      <TextField
+        size="small"
+        variant="outlined"
+        // className={error ? 'error' : ''}
         value={inputValue}
         onChange={changeItemTitleHandler}
         onKeyUp={addItemOnKeyUpHandler}
+        error={!!error}
+        helperText={error}
       />
-      <Button
-        title={'+'}
-        onClick={() => {
-          addItemHandler(inputValue)
-        }}
-      />
-      {error && <div className={'errorMessage'}>{error}</div>}
+      <Button variant="contained" onClick={() => addItemHandler(inputValue)}>
+        <AddIcon />
+      </Button>
+      {/* {error && <div className={'errorMessage'}>{error}</div>} */}
     </div>
   )
 }
