@@ -2,6 +2,7 @@ import { TaskType } from '../App'
 import { Button } from './Button'
 import { Task } from './Tasks'
 import { AddItemForm } from './AddItemForm'
+import { EditableSpan } from './EditableSpan'
 
 export type FilterValuesType = 'all' | 'active' | 'completed'
 
@@ -11,6 +12,7 @@ type PropsType = {
   tasks: TaskType[]
   filter: FilterValuesType
   removeTodolist: (todolistId: string) => void
+  updateTodolistTitle: (todolistId: string, title: string) => void
   removeTask: (todolistId: string, taskId: string) => void
   addItem: (todolistId: string, title: string) => void
   changeTaskStatus: (todolistId: string, taskId: string, isDone: boolean) => void
@@ -24,6 +26,7 @@ export const Todolist = ({
   tasks,
   filter,
   removeTodolist,
+  updateTodolistTitle,
   removeTask,
   addItem,
   changeTaskStatus,
@@ -44,6 +47,10 @@ export const Todolist = ({
 
   const changeFilterHandler = (newFilerValue: FilterValuesType) => {
     changeTodolistFilter(todolistId, newFilerValue)
+  }
+
+  const updateItemTitleHandler = (title: string) => {
+    updateTodolistTitle(todolistId, title)
   }
 
   const getFilteredTasks = () => {
@@ -85,7 +92,9 @@ export const Todolist = ({
   return (
     <div>
       <div style={{ display: 'flex', alignItems: 'center', columnGap: '10px' }}>
-        <h3>{title}</h3>
+        <h3>
+          <EditableSpan oldTitle={title} updateItemTitle={updateItemTitleHandler} className={'title'} />
+        </h3>
         <Button onClick={removeTodolistHandler} title={'x'} />
       </div>
       <AddItemForm addItem={addTaskHandler} />

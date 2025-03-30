@@ -21,7 +21,7 @@ export const Task = ({ todolistId, id, isDone, title, className, onChange, updat
   return (
     <li>
       <input type="checkbox" checked={isDone} onChange={onChangeTaskStatusHandler} />
-      <EditableSpan className={className} oldTitle={title} updateTaskTitle={updateTaskTitleHandler} />
+      <EditableSpan className={className} oldTitle={title} updateItemTitle={updateTaskTitleHandler} />
     </li>
   )
 }

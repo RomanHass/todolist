@@ -3,17 +3,17 @@ import { ChangeEvent, useState } from 'react'
 type PropsType = {
   className: string
   oldTitle: string
-  updateTaskTitle: (title: string) => void
+  updateItemTitle: (title: string) => void
 }
 
-export const EditableSpan = ({ className, oldTitle, updateTaskTitle }: PropsType) => {
+export const EditableSpan = ({ className, oldTitle, updateItemTitle }: PropsType) => {
   const [editMode, setEditMode] = useState(false)
   const [updateTitle, setUpdateTitle] = useState(oldTitle)
 
   const changeEditMode = () => {
     setEditMode(!editMode)
     if (editMode) {
-      updateTaskTitle(updateTitle)
+      updateItemTitle(updateTitle)
     }
   }
 
