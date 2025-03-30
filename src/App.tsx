@@ -23,7 +23,6 @@ export const App = () => {
   const [todolists, setTodolists] = useState<TodolistType[]>([
     { id: todolistId1, title: 'What to learn', filter: 'all' },
     { id: todolistId2, title: 'What to buy', filter: 'all' },
-    // { id: todolistId2, title: 'What to buy', filter: 'all' },
   ])
 
   const [tasks, setTasks] = useState({
@@ -67,6 +66,10 @@ export const App = () => {
     setTodolists(todolists.map(tl => (tl.id === todolistId ? { ...tl, filter: newFilterValue } : tl)))
   }
 
+  const updateTaskTitle = (todolistId: string, taskId: string, title: string) => {
+    setTasks({ ...tasks, [todolistId]: tasks[todolistId].map(t => (t.id === taskId ? { ...t, title } : t)) })
+  }
+
   return (
     <div className="app">
       <div>
@@ -87,6 +90,7 @@ export const App = () => {
             addItem={addTask}
             changeTaskStatus={changeTaskStatus}
             changeTodolistFilter={changeTodolistFilter}
+            updateTaskTitle={updateTaskTitle}
           />
         )
       })}

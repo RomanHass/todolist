@@ -15,6 +15,7 @@ type PropsType = {
   addItem: (todolistId: string, title: string) => void
   changeTaskStatus: (todolistId: string, taskId: string, isDone: boolean) => void
   changeTodolistFilter: (todolistId: string, newFilterValue: FilterValuesType) => void
+  updateTaskTitle: (todolistId: string, taskId: string, title: string) => void
 }
 
 export const Todolist = ({
@@ -27,6 +28,7 @@ export const Todolist = ({
   addItem,
   changeTaskStatus,
   changeTodolistFilter,
+  updateTaskTitle,
 }: PropsType) => {
   const removeTodolistHandler = () => {
     removeTodolist(todolistId)
@@ -73,6 +75,7 @@ export const Todolist = ({
           isDone={t.isDone}
           title={t.title}
           onChange={changeTaskStatusHandler}
+          updateTaskTitle={updateTaskTitle}
         />
         <Button onClick={removeTaskHandler} title={'x'} />
       </div>
