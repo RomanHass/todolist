@@ -16,6 +16,8 @@ export type TaskType = {
   isDone: boolean
 }
 
+export type TasksStateType = Record<string, TaskType[]>
+
 export const App = () => {
   const todolistId1 = v1()
   const todolistId2 = v1()
@@ -25,7 +27,7 @@ export const App = () => {
     { id: todolistId2, title: 'What to buy', filter: 'all' },
   ])
 
-  const [tasks, setTasks] = useState({
+  const [tasks, setTasks] = useState<TasksStateType>({
     [todolistId1]: [
       { id: v1(), title: 'HTML&CSS', isDone: true },
       { id: v1(), title: 'JS', isDone: true },
