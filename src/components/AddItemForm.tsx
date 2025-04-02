@@ -37,17 +37,15 @@ export const AddItemForm = ({ addItem }: PropsType) => {
       <TextField
         size="small"
         variant="outlined"
-        // className={error ? 'error' : ''}
         value={inputValue}
         onChange={changeItemTitleHandler}
         onKeyUp={addItemOnKeyUpHandler}
         error={!!error}
         helperText={error}
       />
-      <Button variant="contained" onClick={() => addItemHandler(inputValue)}>
+      <Button variant="contained" size="large" onClick={() => addItemHandler(inputValue)}>
         <AddIcon />
       </Button>
-      {/* {error && <div className={'errorMessage'}>{error}</div>} */}
     </div>
   )
 }

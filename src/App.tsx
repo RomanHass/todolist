@@ -3,6 +3,15 @@ import './App.css'
 import { FilterValuesType, Todolist } from './components/Todolist'
 import { v1 } from 'uuid'
 import { AddItemForm } from './components/AddItemForm'
+import AppBar from '@mui/material/AppBar'
+import Toolbar from '@mui/material/Toolbar'
+import IconButton from '@mui/material/IconButton'
+import MenuIcon from '@mui/icons-material/Menu'
+import Container from '@mui/material/Container'
+import Grid from '@mui/material/Grid'
+import Paper from '@mui/material/Paper'
+import { containerSx } from './components/Todolist.styles'
+import { NavButton } from './components/NavButton'
 
 export type TodolistType = {
   id: string
@@ -35,6 +44,7 @@ export const App = () => {
     ],
     [todolistId2]: [
       { id: v1(), title: 'Rest API', isDone: true },
+      { id: v1(), title: 'GraphQL', isDone: false },
       { id: v1(), title: 'GraphQL', isDone: false },
     ],
   })
@@ -78,29 +88,51 @@ export const App = () => {
 
   return (
     <div className="app">
-      <div>
-        <h3>Добавить тудулист:</h3>
-        <AddItemForm addItem={addTodolist} />
-      </div>
-      {todolists.map(tl => {
-        let tasksForTodolist = tasks[tl.id]
-        return (
-          <Todolist
-            key={tl.id}
-            todolistId={tl.id}
-            title={tl.title}
-            tasks={tasksForTodolist}
-            filter={tl.filter}
-            removeTodolist={removeTodolist}
-            updateTodolistTitle={updateTodolistTitle}
-            removeTask={removeTask}
-            addItem={addTask}
-            changeTaskStatus={changeTaskStatus}
-            changeTodolistFilter={changeTodolistFilter}
-            updateTaskTitle={updateTaskTitle}
-          />
-        )
-      })}
+      <AppBar position="static">
+        <Toolbar>
+          <Container maxWidth="lg" sx={containerSx}>
+            <IconButton color="inherit">
+              <MenuIcon />
+            </IconButton>
+            <div>
+              <NavButton>Sign in</NavButton>
+              <NavButton>Sign up</NavButton>
+              <NavButton background={'dodgerblue'}>Faq</NavButton>
+            </div>
+          </Container>
+        </Toolbar>
+      </AppBar>
+      <Container maxWidth="lg">
+        <Grid container alignItems={'center'} sx={{ p: '20px 0' }}>
+          <h3>Добавить тудулист:</h3>
+          <AddItemForm addItem={addTodolist} />
+        </Grid>
+        <Grid container spacing={4}>
+          {todolists.map(tl => {
+            let tasksForTodolist = tasks[tl.id]
+            return (
+              <Grid>
+                <Paper elevation={5} sx={{ p: '15px' }}>
+                  <Todolist
+                    key={tl.id}
+                    todolistId={tl.id}
+                    title={tl.title}
+                    tasks={tasksForTodolist}
+                    filter={tl.filter}
+                    removeTodolist={removeTodolist}
+                    updateTodolistTitle={updateTodolistTitle}
+                    removeTask={removeTask}
+                    addItem={addTask}
+                    changeTaskStatus={changeTaskStatus}
+                    changeTodolistFilter={changeTodolistFilter}
+                    updateTaskTitle={updateTaskTitle}
+                  />
+                </Paper>
+              </Grid>
+            )
+          })}
+        </Grid>
+      </Container>
     </div>
   )
 }

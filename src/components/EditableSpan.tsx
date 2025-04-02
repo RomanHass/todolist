@@ -2,7 +2,7 @@ import TextField from '@mui/material/TextField'
 import { ChangeEvent, useState } from 'react'
 
 type PropsType = {
-  className: string
+  className?: string
   oldTitle: string
   updateItemTitle: (title: string) => void
 }

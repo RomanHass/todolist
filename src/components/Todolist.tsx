@@ -1,11 +1,11 @@
 import { TaskType } from '../App'
-// import { Button } from './Button'
-import { Task } from './Tasks'
+import { Task } from './Task'
 import { AddItemForm } from './AddItemForm'
 import { EditableSpan } from './EditableSpan'
 import Button from '@mui/material/Button'
-import { IconButton, List } from '@mui/material'
+import { Box, IconButton, List } from '@mui/material'
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
+import { containerSx } from './Todolist.styles'
 
 export type FilterValuesType = 'all' | 'active' | 'completed'
 
@@ -80,7 +80,6 @@ export const Todolist = ({
       <Task
         key={t.id}
         id={t.id}
-        className={t.isDone ? 'is-done' : ''}
         todolistId={todolistId}
         isDone={t.isDone}
         title={t.title}
@@ -103,7 +102,7 @@ export const Todolist = ({
       </div>
       <AddItemForm addItem={addTaskHandler} />
       {tasks.length === 0 ? <p>Тасок нет</p> : <List>{tasksForTodolist}</List>}
-      <div>
+      <Box sx={containerSx}>
         <Button
           variant="contained"
           color={filter === 'all' ? 'secondary' : 'primary'}
@@ -125,7 +124,7 @@ export const Todolist = ({
         >
           Completed
         </Button>
-      </div>
+      </Box>
     </div>
   )
 }
