@@ -3,7 +3,7 @@ import { Task } from './Task'
 import { AddItemForm } from './AddItemForm'
 import { EditableSpan } from './EditableSpan'
 import Button from '@mui/material/Button'
-import { Box, IconButton, List } from '@mui/material'
+import { Box, IconButton, List, Typography } from '@mui/material'
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
 import { containerSx } from './Todolist.styles'
 
@@ -92,14 +92,14 @@ export const Todolist = ({
 
   return (
     <div>
-      <div style={{ display: 'flex', alignItems: 'center', columnGap: '10px' }}>
-        <h3>
+      <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', columnGap: '10px' }}>
+        <Typography variant="h6" fontWeight={700}>
           <EditableSpan oldTitle={title} updateItemTitle={updateItemTitleHandler} className={'title'} />
-        </h3>
+        </Typography>
         <IconButton onClick={removeTodolistHandler}>
           <DeleteForeverIcon />
         </IconButton>
-      </div>
+      </Box>
       <AddItemForm addItem={addTaskHandler} />
       {tasks.length === 0 ? <p>Тасок нет</p> : <List>{tasksForTodolist}</List>}
       <Box sx={containerSx}>
