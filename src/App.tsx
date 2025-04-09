@@ -15,12 +15,7 @@ import { NavButton } from './components/NavButton'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
 import { CssBaseline, Switch, Typography } from '@mui/material'
 import { indigo } from '@mui/material/colors'
-
-export type TodolistType = {
-  id: string
-  title: string
-  filter: FilterValuesType
-}
+import { TodolistType } from './model/todolists-reducer'
 
 export type TaskType = {
   id: string
