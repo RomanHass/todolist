@@ -1,6 +1,6 @@
 import { v1 } from 'uuid'
 import { expect, test } from 'vitest'
-import { todolistsReducer, TodolistType } from './todolists-reducer'
+import { deleteTodolistAC, todolistsReducer, TodolistType } from './todolists-reducer'
 
 test('correct todolist should be deleted', () => {
   const todolistId1 = v1()
@@ -13,14 +13,14 @@ test('correct todolist should be deleted', () => {
   ]
 
   // 2. Действие
-  const action = {
-    type: 'delete_todolist',
-    payload: {
-      id: todolistId1,
-    },
-  } as const
+  // const action = {
+  //   type: 'delete_todolist',
+  //   payload: {
+  //     id: todolistId1,
+  //   },
+  // } as const
 
-  const endState = todolistsReducer(startState, action)
+  const endState = todolistsReducer(startState, deleteTodolistAC(todolistId1))
 
   // 3. Проверка, что действие измененило state соответствующим образом
   // в массиве останется один тудулист
@@ -75,6 +75,7 @@ test('correct todolist should be change its title', () => {
   const endState = todolistsReducer(startState, action)
 
   expect(endState[0].title).toBe(title)
+  expect(endState[1].title).toBe('What to buy')
 })
 
 test('correct todolist should be change its filter', () => {
@@ -98,5 +99,6 @@ test('correct todolist should be change its filter', () => {
 
   const endState = todolistsReducer(startState, action)
 
+  expect(endState[0].filter).toBe('all')
   expect(endState[1].filter).toBe(filter)
 })
