@@ -17,10 +17,9 @@ const initialState: TodolistType[] = [
 
 export const todolistsReducer = (state = initialState, action: ActionsType): TodolistType[] => {
   switch (action.type) {
-    case 'add_todolist': {
-      const todolistId = v1()
-      const newTodolist: TodolistType = { id: todolistId, title: action.payload.title, filter: 'all' }
-      return [...state, newTodolist]
+    case 'create_todolist': {
+      const { id, title } = action.payload
+      return [...state, { id, title, filter: 'all' }]
     }
     case 'delete_todolist': {
       return state.filter(tl => tl.id !== action.payload.id)
@@ -36,8 +35,8 @@ export const todolistsReducer = (state = initialState, action: ActionsType): Tod
   }
 }
 
-export const addTodolistAC = (title: string) => {
-  return { type: 'add_todolist', payload: { title } } as const
+export const createTodolistAC = (payload: { id: string; title: string }) => {
+  return { type: 'create_todolist', payload } as const
 }
 
 export const deleteTodolistAC = (id: string) => {
@@ -55,28 +54,13 @@ export const changeTodolistFilterAC = (payload: { id: string; newFilterValue: Fi
   return { type: 'change_todolist_filter', payload } as const
 }
 
-export type AddTodolistActionType = {
-  type: 'add_todolist'
-  payload: { title: string }
-}
-
-export type DeleteTodolistActionType = {
-  type: 'delete_todolist'
-  payload: { id: string }
-}
-
-export type UpdateTodolistTitleAction = {
-  type: 'update_todolist_title'
-  payload: { id: string; title: string }
-}
-
-export type ChangeTodolistFilterAction = {
-  type: 'change_todolist_filter'
-  payload: { id: string; newFilterValue: FilterValuesType }
-}
+type CreateTodolistActionType = ReturnType<typeof createTodolistAC>
+type DeleteTodolistActionType = ReturnType<typeof deleteTodolistAC>
+type UpdateToodlistActionType = ReturnType<typeof updateTodolistTitleAC>
+type ChangeTodolistFilterActionType = ReturnType<typeof changeTodolistFilterAC>
 
 type ActionsType =
-  | AddTodolistActionType
+  | CreateTodolistActionType
   | DeleteTodolistActionType
-  | UpdateTodolistTitleAction
-  | ChangeTodolistFilterAction
+  | UpdateToodlistActionType
+  | ChangeTodolistFilterActionType

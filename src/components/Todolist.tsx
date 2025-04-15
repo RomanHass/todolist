@@ -14,7 +14,7 @@ type PropsType = {
   title: string
   tasks: TaskType[]
   filter: FilterValuesType
-  removeTodolist: (todolistId: string) => void
+  deleteTodolist: (todolistId: string) => void
   updateTodolistTitle: (todolistId: string, title: string) => void
   removeTask: (todolistId: string, taskId: string) => void
   addItem: (todolistId: string, title: string) => void
@@ -28,7 +28,7 @@ export const Todolist = ({
   title,
   tasks,
   filter,
-  removeTodolist,
+  deleteTodolist,
   updateTodolistTitle,
   removeTask,
   addItem,
@@ -36,8 +36,8 @@ export const Todolist = ({
   changeTodolistFilter,
   updateTaskTitle,
 }: PropsType) => {
-  const removeTodolistHandler = () => {
-    removeTodolist(todolistId)
+  const deleteTodolistHandler = () => {
+    deleteTodolist(todolistId)
   }
 
   const changeTaskStatusHandler = (todolistId: string, taskId: string, isDone: boolean) => {
@@ -96,7 +96,7 @@ export const Todolist = ({
         <Typography variant="h6" fontWeight={700}>
           <EditableSpan oldTitle={title} updateItemTitle={updateItemTitleHandler} className={'title'} />
         </Typography>
-        <IconButton onClick={removeTodolistHandler}>
+        <IconButton onClick={deleteTodolistHandler}>
           <DeleteForeverIcon />
         </IconButton>
       </Box>
