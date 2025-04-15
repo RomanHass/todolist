@@ -1,3 +1,4 @@
+import { v1 } from 'uuid'
 import { FilterValuesType } from '../components/Todolist'
 
 export type TodolistType = {
@@ -8,11 +9,11 @@ export type TodolistType = {
 
 const initialState: TodolistType[] = []
 
-export const todolistsReducer = (state = initialState, action: ActionsType): TodolistType[] => {
+export const todolistsReducer = (state: TodolistType[] = initialState, action: ActionsType): TodolistType[] => {
   switch (action.type) {
     case 'create_todolist': {
-      const { id, title } = action.payload
-      return [...state, { id, title, filter: 'all' }]
+      const { title } = action.payload
+      return [...state, { id: v1(), title, filter: 'all' }]
     }
     case 'delete_todolist': {
       return state.filter(tl => tl.id !== action.payload.id)
@@ -28,8 +29,8 @@ export const todolistsReducer = (state = initialState, action: ActionsType): Tod
   }
 }
 
-export const createTodolistAC = (payload: { id: string; title: string }) => {
-  return { type: 'create_todolist', payload } as const
+export const createTodolistAC = (title: string) => {
+  return { type: 'create_todolist', payload: { id: v1(), title } } as const
 }
 
 export const deleteTodolistAC = (id: string) => {
@@ -47,10 +48,10 @@ export const changeTodolistFilterAC = (payload: { id: string; newFilterValue: Fi
   return { type: 'change_todolist_filter', payload } as const
 }
 
-type CreateTodolistActionType = ReturnType<typeof createTodolistAC>
-type DeleteTodolistActionType = ReturnType<typeof deleteTodolistAC>
-type UpdateToodlistActionType = ReturnType<typeof updateTodolistTitleAC>
-type ChangeTodolistFilterActionType = ReturnType<typeof changeTodolistFilterAC>
+export type CreateTodolistActionType = ReturnType<typeof createTodolistAC>
+export type DeleteTodolistActionType = ReturnType<typeof deleteTodolistAC>
+export type UpdateToodlistActionType = ReturnType<typeof updateTodolistTitleAC>
+export type ChangeTodolistFilterActionType = ReturnType<typeof changeTodolistFilterAC>
 
 type ActionsType =
   | CreateTodolistActionType

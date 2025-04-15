@@ -26,9 +26,8 @@ beforeEach(() => {
 
 test('correct todolist should be created', () => {
   const title = 'New Todolist'
-  const id = v1()
 
-  const endState = todolistsReducer(startState, createTodolistAC({ id, title }))
+  const endState = todolistsReducer(startState, createTodolistAC(title))
 
   expect(endState.length).toBe(3)
   expect(endState[0].title).toBe('What to learn')

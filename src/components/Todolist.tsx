@@ -1,4 +1,3 @@
-import { TaskType } from '../App'
 import { Task } from './Task'
 import { AddItemForm } from './AddItemForm'
 import { EditableSpan } from './EditableSpan'
@@ -6,6 +5,7 @@ import Button from '@mui/material/Button'
 import { Box, IconButton, List, Typography } from '@mui/material'
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
 import { containerSx } from './Todolist.styles'
+import { TaskType } from '../App'
 
 export type FilterValuesType = 'all' | 'active' | 'completed'
 
@@ -16,7 +16,7 @@ type PropsType = {
   filter: FilterValuesType
   deleteTodolist: (todolistId: string) => void
   updateTodolistTitle: (todolistId: string, title: string) => void
-  removeTask: (todolistId: string, taskId: string) => void
+  deleteTask: (todolistId: string, taskId: string) => void
   addItem: (todolistId: string, title: string) => void
   changeTaskStatus: (todolistId: string, taskId: string, isDone: boolean) => void
   changeTodolistFilter: (todolistId: string, newFilterValue: FilterValuesType) => void
@@ -30,7 +30,7 @@ export const Todolist = ({
   filter,
   deleteTodolist,
   updateTodolistTitle,
-  removeTask,
+  deleteTask,
   addItem,
   changeTaskStatus,
   changeTodolistFilter,
@@ -72,8 +72,8 @@ export const Todolist = ({
   let filteredTasks = getFilteredTasks()
 
   const tasksForTodolist = filteredTasks.map(t => {
-    const removeTaskHandler = () => {
-      removeTask(todolistId, t.id)
+    const deleteTaskHandler = () => {
+      deleteTask(todolistId, t.id)
     }
 
     return (
@@ -85,7 +85,7 @@ export const Todolist = ({
         title={t.title}
         onChange={changeTaskStatusHandler}
         updateTaskTitle={updateTaskTitle}
-        removeTask={removeTaskHandler}
+        deleteTask={deleteTaskHandler}
       />
     )
   })
