@@ -69,7 +69,7 @@ export const Todolist = ({
     }
   }
 
-  let filteredTasks = getFilteredTasks()
+  let filteredTasks = getFilteredTasks() ?? []
 
   const tasksForTodolist = filteredTasks.map(t => {
     const deleteTaskHandler = () => {
@@ -101,7 +101,7 @@ export const Todolist = ({
         </IconButton>
       </Box>
       <AddItemForm addItem={addTaskHandler} />
-      {tasks.length === 0 ? <p>Тасок нет</p> : <List>{tasksForTodolist}</List>}
+      {!tasks || tasks.length === 0 ? <p>Тасок нет</p> : <List>{tasksForTodolist}</List>}
       <Box sx={containerSx}>
         <Button
           variant="contained"
