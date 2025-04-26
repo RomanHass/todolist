@@ -12,8 +12,8 @@ const initialState: TodolistType[] = []
 export const todolistsReducer = (state: TodolistType[] = initialState, action: ActionsType): TodolistType[] => {
   switch (action.type) {
     case 'create_todolist': {
-      const { title } = action.payload
-      return [...state, { id: v1(), title, filter: 'all' }]
+      const { id, title } = action.payload
+      return [...state, { id, title, filter: 'all' }]
     }
     case 'delete_todolist': {
       return state.filter(tl => tl.id !== action.payload.id)
