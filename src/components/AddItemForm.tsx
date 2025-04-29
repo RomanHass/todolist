@@ -18,7 +18,7 @@ export const AddItemForm = ({ addItem }: PropsType) => {
 
   const addItemOnKeyUpHandler = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
-      addItemHandler(e.currentTarget.value)
+      addItemHandler(inputValue)
     }
   }
 
