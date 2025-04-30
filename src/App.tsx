@@ -19,11 +19,10 @@ import {
   changeTodolistFilterAC,
   deleteTodolistAC,
   updateTodolistTitleAC,
-  TodolistType,
 } from './model/todolists-reducer'
 import { changeTaskStatusAC, createTaskAC, deleteTaskAC, updateTaskTitleAC } from './model/tasks-reducer'
-import { useDispatch, useSelector } from 'react-redux'
-import { RootState } from './app/strore'
+import { useAppDispatch } from './app/common/hooks/useAppDispatch'
+import { useAppSelector } from './app/common/hooks/useAppSelector'
 
 export type TaskType = {
   id: string
@@ -31,13 +30,33 @@ export type TaskType = {
   isDone: boolean
 }
 
+type ThemeMode = 'light' | 'dark'
+
 export type TasksStateType = Record<string, TaskType[]>
 
 export const App = () => {
-  const todolists = useSelector<RootState, TodolistType[]>(state => state.todolists)
-  const tasks = useSelector<RootState, TasksStateType>(state => state.tasks)
+  const todolists = useAppSelector(state => state.todolists)
+  const tasks = useAppSelector(state => state.tasks)
 
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
+
+  const [themeMode, setThemeMode] = useState<ThemeMode>('light')
+
+  const theme = createTheme({
+    palette: {
+      mode: themeMode,
+      primary: {
+        main: indigo[400],
+      },
+      secondary: {
+        main: indigo[700],
+      },
+    },
+  })
+
+  const changeMode = () => {
+    setThemeMode(prevMode => (prevMode === 'light' ? 'dark' : 'light'))
+  }
 
   const createTodolist = (title: string) => {
     dispatch(createTodolistAC(title))
@@ -70,26 +89,6 @@ export const App = () => {
   const updateTaskTitle = (todolistId: string, taskId: string, title: string) => {
     dispatch(updateTaskTitleAC({ todolistId, taskId, title }))
   }
-
-  type ThemeMode = 'light' | 'dark'
-
-  const [themeMode, setThemeMode] = useState<ThemeMode>('light')
-
-  const changeMode = () => {
-    setThemeMode(prevMode => (prevMode === 'light' ? 'dark' : 'light'))
-  }
-
-  const theme = createTheme({
-    palette: {
-      mode: themeMode,
-      primary: {
-        main: indigo[400],
-      },
-      secondary: {
-        main: indigo[700],
-      },
-    },
-  })
 
   return (
     <div className="app">
