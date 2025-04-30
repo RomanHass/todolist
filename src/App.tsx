@@ -23,6 +23,8 @@ import {
 import { changeTaskStatusAC, createTaskAC, deleteTaskAC, updateTaskTitleAC } from './model/tasks-reducer'
 import { useAppDispatch } from './app/common/hooks/useAppDispatch'
 import { useAppSelector } from './app/common/hooks/useAppSelector'
+import { selectTodolists } from './model/todolists-selectors'
+import { selectTasks } from './model/tasks-selectors'
 
 export type TaskType = {
   id: string
@@ -35,8 +37,8 @@ type ThemeMode = 'light' | 'dark'
 export type TasksStateType = Record<string, TaskType[]>
 
 export const App = () => {
-  const todolists = useAppSelector(state => state.todolists)
-  const tasks = useAppSelector(state => state.tasks)
+  const todolists = useAppSelector(selectTodolists)
+  const tasks = useAppSelector(selectTasks)
 
   const dispatch = useAppDispatch()
 
