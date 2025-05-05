@@ -18,7 +18,7 @@ import {
   createTodolistAC,
   changeTodolistFilterAC,
   deleteTodolistAC,
-  updateTodolistTitleAC,
+  changeTodolistTitleAC,
 } from './model/todolists-reducer'
 import { changeTaskStatusAC, createTaskAC, deleteTaskAC, updateTaskTitleAC } from './model/tasks-reducer'
 import { useAppDispatch } from './app/common/hooks/useAppDispatch'
@@ -26,15 +26,7 @@ import { useAppSelector } from './app/common/hooks/useAppSelector'
 import { selectTodolists } from './model/todolists-selectors'
 import { selectTasks } from './model/tasks-selectors'
 
-export type TaskType = {
-  id: string
-  title: string
-  isDone: boolean
-}
-
 type ThemeMode = 'light' | 'dark'
-
-export type TasksStateType = Record<string, TaskType[]>
 
 export const App = () => {
   const todolists = useAppSelector(selectTodolists)
@@ -65,11 +57,11 @@ export const App = () => {
   }
 
   const deleteTodolist = (todolistId: string) => {
-    dispatch(deleteTodolistAC(todolistId))
+    dispatch(deleteTodolistAC({ id: todolistId }))
   }
 
-  const updateTodolistTitle = (todolistId: string, title: string) => {
-    dispatch(updateTodolistTitleAC({ id: todolistId, title }))
+  const changeTodolistTitle = (todolistId: string, title: string) => {
+    dispatch(changeTodolistTitleAC({ id: todolistId, title }))
   }
 
   const changeTodolistFilter = (todolistId: string, newFilterValue: FilterValuesType) => {
@@ -130,7 +122,7 @@ export const App = () => {
                       tasks={tasksForTodolist}
                       filter={tl.filter}
                       deleteTodolist={deleteTodolist}
-                      updateTodolistTitle={updateTodolistTitle}
+                      changeTodolistTitle={changeTodolistTitle}
                       deleteTask={deleteTask}
                       addItem={createTask}
                       changeTaskStatus={changeTaskStatus}

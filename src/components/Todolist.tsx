@@ -5,7 +5,7 @@ import Button from '@mui/material/Button'
 import { Box, IconButton, List, Typography } from '@mui/material'
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
 import { containerSx } from './Todolist.styles'
-import { TaskType } from '../App'
+import { TaskType } from '../model/tasks-reducer'
 
 export type FilterValuesType = 'all' | 'active' | 'completed'
 
@@ -15,7 +15,7 @@ type PropsType = {
   tasks: TaskType[]
   filter: FilterValuesType
   deleteTodolist: (todolistId: string) => void
-  updateTodolistTitle: (todolistId: string, title: string) => void
+  changeTodolistTitle: (todolistId: string, title: string) => void
   deleteTask: (todolistId: string, taskId: string) => void
   addItem: (todolistId: string, title: string) => void
   changeTaskStatus: (todolistId: string, taskId: string, isDone: boolean) => void
@@ -29,7 +29,7 @@ export const Todolist = ({
   tasks,
   filter,
   deleteTodolist,
-  updateTodolistTitle,
+  changeTodolistTitle,
   deleteTask,
   addItem,
   changeTaskStatus,
@@ -53,7 +53,7 @@ export const Todolist = ({
   }
 
   const updateItemTitleHandler = (title: string) => {
-    updateTodolistTitle(todolistId, title)
+    changeTodolistTitle(todolistId, title)
   }
 
   const getFilteredTasks = () => {

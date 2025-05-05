@@ -1,6 +1,13 @@
-import { v1 } from 'uuid'
-import { TasksStateType, TaskType } from '../App'
-import { CreateTodolistActionType, DeleteTodolistActionType } from './todolists-reducer'
+import { nanoid } from '@reduxjs/toolkit'
+import { CreateTodolistAction, DeleteTodolistAction } from './todolists-reducer'
+
+export type TaskType = {
+  id: string
+  title: string
+  isDone: boolean
+}
+
+export type TasksStateType = Record<string, TaskType[]>
 
 const initialState: TasksStateType = {}
 
@@ -21,7 +28,7 @@ export const tasksReducer = (state: TasksStateType = initialState, action: Actio
     }
     case 'create_task': {
       const { todolistId, title } = action.payload
-      const newTask: TaskType = { id: v1(), title, isDone: false }
+      const newTask: TaskType = { id: nanoid(), title, isDone: false }
       return { ...state, [todolistId]: [newTask, ...state[todolistId]] }
     }
     case 'change_task_status': {
@@ -53,15 +60,15 @@ export const updateTaskTitleAC = (payload: { todolistId: string; taskId: string;
   return { type: 'update_task_title', payload } as const
 }
 
-export type DeleteTaskActionType = ReturnType<typeof deleteTaskAC>
-export type CreateTaskActionType = ReturnType<typeof createTaskAC>
-export type ChangeTaskStatusActionType = ReturnType<typeof changeTaskStatusAC>
-export type UpdateTaskTitleActionType = ReturnType<typeof updateTaskTitleAC>
+export type DeleteTaskAction = ReturnType<typeof deleteTaskAC>
+export type CreateTaskAction = ReturnType<typeof createTaskAC>
+export type ChangeTaskStatusAction = ReturnType<typeof changeTaskStatusAC>
+export type UpdateTaskTitleAction = ReturnType<typeof updateTaskTitleAC>
 
 type Actions =
-  | CreateTodolistActionType
-  | DeleteTodolistActionType
-  | DeleteTaskActionType
-  | CreateTaskActionType
-  | ChangeTaskStatusActionType
-  | UpdateTaskTitleActionType
+  | CreateTodolistAction
+  | DeleteTodolistAction
+  | DeleteTaskAction
+  | CreateTaskAction
+  | ChangeTaskStatusAction
+  | UpdateTaskTitleAction
