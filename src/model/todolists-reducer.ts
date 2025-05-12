@@ -35,9 +35,6 @@ export const todolistsReducer = createReducer(initialState, builder => {
     })
 })
 
-export type CreateTodolistAction = ReturnType<typeof createTodolistAC>
-export type DeleteTodolistAction = ReturnType<typeof deleteTodolistAC>
-
 export type Todolist = {
   id: string
   title: string

@@ -1,4 +1,4 @@
 import { RootState } from '../app/strore'
-import { TodolistType } from './todolists-reducer'
+import { Todolist } from './todolists-reducer'
 
-export const selectTodolists = (state: RootState): TodolistType[] => state.todolists
+export const selectTodolists = (state: RootState): Todolist[] => state.todolists

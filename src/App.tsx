@@ -20,7 +20,7 @@ import {
   deleteTodolistAC,
   changeTodolistTitleAC,
 } from './model/todolists-reducer'
-import { changeTaskStatusAC, createTaskAC, deleteTaskAC, updateTaskTitleAC } from './model/tasks-reducer'
+import { changeTaskStatusAC, changeTaskTitleAC, createTaskAC, deleteTaskAC } from './model/tasks-reducer'
 import { useAppDispatch } from './app/common/hooks/useAppDispatch'
 import { useAppSelector } from './app/common/hooks/useAppSelector'
 import { selectTodolists } from './model/todolists-selectors'
@@ -80,8 +80,8 @@ export const App = () => {
     dispatch(changeTaskStatusAC({ todolistId, taskId, isDone }))
   }
 
-  const updateTaskTitle = (todolistId: string, taskId: string, title: string) => {
-    dispatch(updateTaskTitleAC({ todolistId, taskId, title }))
+  const changeTaskTitle = (todolistId: string, taskId: string, title: string) => {
+    dispatch(changeTaskTitleAC({ todolistId, taskId, title }))
   }
 
   return (
@@ -127,7 +127,7 @@ export const App = () => {
                       addItem={createTask}
                       changeTaskStatus={changeTaskStatus}
                       changeTodolistFilter={changeTodolistFilter}
-                      updateTaskTitle={updateTaskTitle}
+                      updateTaskTitle={changeTaskTitle}
                     />
                   </Paper>
                 </Grid>
