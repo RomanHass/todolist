@@ -1,6 +1,6 @@
 import './App.css'
-import { FilterValuesType, Todolist } from './components/Todolist'
-import { AddItemForm } from './components/AddItemForm'
+import { FilterValuesType, Todolist } from '../components/Todolist'
+import { AddItemForm } from '../components/AddItemForm'
 import AppBar from '@mui/material/AppBar'
 import Toolbar from '@mui/material/Toolbar'
 import IconButton from '@mui/material/IconButton'
@@ -8,8 +8,8 @@ import MenuIcon from '@mui/icons-material/Menu'
 import Container from '@mui/material/Container'
 import Grid from '@mui/material/Grid'
 import Paper from '@mui/material/Paper'
-import { containerSx } from './components/Todolist.styles'
-import { NavButton } from './components/NavButton'
+import { containerSx } from '../components/Todolist.styles'
+import { NavButton } from '../components/NavButton'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
 import { CssBaseline, Switch, Typography } from '@mui/material'
 import { indigo } from '@mui/material/colors'
@@ -18,14 +18,14 @@ import {
   changeTodolistFilterAC,
   deleteTodolistAC,
   changeTodolistTitleAC,
-} from './model/todolists-reducer'
-import { changeTaskStatusAC, changeTaskTitleAC, createTaskAC, deleteTaskAC } from './model/tasks-reducer'
-import { useAppDispatch } from './app/common/hooks/useAppDispatch'
-import { useAppSelector } from './app/common/hooks/useAppSelector'
-import { selectTodolists } from './model/todolists-selectors'
-import { selectTasks } from './model/tasks-selectors'
-import { selectThemeMode } from './model/app-selectors'
-import { changeThemeModeAC } from './model/app-reducer'
+} from '../model/todolists-reducer'
+import { changeTaskStatusAC, changeTaskTitleAC, createTaskAC, deleteTaskAC } from '../model/tasks-reducer'
+import { useAppDispatch } from '../common/hooks/useAppDispatch'
+import { useAppSelector } from '../common/hooks/useAppSelector'
+import { selectTodolists } from '../model/todolists-selectors'
+import { selectTasks } from '../model/tasks-selectors'
+import { selectThemeMode } from './app-selectors'
+import { changeThemeModeAC } from './app-reducer'
 
 export const App = () => {
   const todolists = useAppSelector(selectTodolists)
