@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import './App.css'
 import { FilterValuesType, Todolist } from './components/Todolist'
 import { AddItemForm } from './components/AddItemForm'
@@ -25,16 +24,15 @@ import { useAppDispatch } from './app/common/hooks/useAppDispatch'
 import { useAppSelector } from './app/common/hooks/useAppSelector'
 import { selectTodolists } from './model/todolists-selectors'
 import { selectTasks } from './model/tasks-selectors'
-
-type ThemeMode = 'light' | 'dark'
+import { selectThemeMode } from './model/app-selectors'
+import { changeThemeModeAC } from './model/app-reducer'
 
 export const App = () => {
   const todolists = useAppSelector(selectTodolists)
   const tasks = useAppSelector(selectTasks)
+  const themeMode = useAppSelector(selectThemeMode)
 
   const dispatch = useAppDispatch()
-
-  const [themeMode, setThemeMode] = useState<ThemeMode>('light')
 
   const theme = createTheme({
     palette: {
@@ -49,7 +47,7 @@ export const App = () => {
   })
 
   const changeMode = () => {
-    setThemeMode(prevMode => (prevMode === 'light' ? 'dark' : 'light'))
+    dispatch(changeThemeModeAC({ themeMode: themeMode === 'light' ? 'dark' : 'light' }))
   }
 
   const createTodolist = (title: string) => {

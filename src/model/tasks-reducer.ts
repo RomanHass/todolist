@@ -7,9 +7,9 @@ export type TaskType = {
   isDone: boolean
 }
 
-export type TasksStateType = Record<string, TaskType[]>
+export type TasksState = Record<string, TaskType[]>
 
-const initialState: TasksStateType = {}
+const initialState: TasksState = {}
 
 export const deleteTaskAC = createAction<{ todolistId: string; taskId: string }>('tasks/deleteTask')
 export const createTaskAC = createAction<{ todolistId: string; title: string }>('tasks/createTask')

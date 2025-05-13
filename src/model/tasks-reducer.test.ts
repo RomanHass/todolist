@@ -5,11 +5,11 @@ import {
   createTaskAC,
   deleteTaskAC,
   tasksReducer,
-  TasksStateType,
+  TasksState,
 } from './tasks-reducer'
 import { createTodolistAC, deleteTodolistAC } from './todolists-reducer'
 
-let startState: TasksStateType = {}
+let startState: TasksState = {}
 
 beforeEach(() => {
   startState = {

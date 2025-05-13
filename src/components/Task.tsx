@@ -5,7 +5,7 @@ import { Box, ListItem } from '@mui/material'
 import { IconButton } from '@mui/material'
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
 import { getListItemSx } from './Todolist.styles'
-import { TaskType } from '../App'
+import { TaskType } from '../model/tasks-reducer'
 
 type PropsType = TaskType & {
   todolistId: string

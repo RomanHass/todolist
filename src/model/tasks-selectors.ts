@@ -1,4 +1,4 @@
 import { RootState } from '../app/strore'
-import { TasksStateType } from './tasks-reducer'
+import { TasksState } from './tasks-reducer'
 
-export const selectTasks = (state: RootState): TasksStateType => state.tasks
+export const selectTasks = (state: RootState): TasksState => state.tasks
