@@ -10,14 +10,13 @@ import Grid from '@mui/material/Grid'
 import Paper from '@mui/material/Paper'
 import { containerSx } from '../components/Todolist.styles'
 import { NavButton } from '../components/NavButton'
-import { createTheme, ThemeProvider } from '@mui/material/styles'
+import { ThemeProvider } from '@mui/material/styles'
 import { CssBaseline, Switch, Typography } from '@mui/material'
-import { indigo } from '@mui/material/colors'
 import {
-  createTodolistAC,
   changeTodolistFilterAC,
-  deleteTodolistAC,
   changeTodolistTitleAC,
+  createTodolistAC,
+  deleteTodolistAC,
 } from '../model/todolists-reducer'
 import { changeTaskStatusAC, changeTaskTitleAC, createTaskAC, deleteTaskAC } from '../model/tasks-reducer'
 import { useAppDispatch } from '../common/hooks/useAppDispatch'
@@ -26,6 +25,7 @@ import { selectTodolists } from '../model/todolists-selectors'
 import { selectTasks } from '../model/tasks-selectors'
 import { selectThemeMode } from './app-selectors'
 import { changeThemeModeAC } from './app-reducer'
+import { getTheme } from "../common/theme/theme.ts";
 
 export const App = () => {
   const todolists = useAppSelector(selectTodolists)
@@ -34,17 +34,7 @@ export const App = () => {
 
   const dispatch = useAppDispatch()
 
-  const theme = createTheme({
-    palette: {
-      mode: themeMode,
-      primary: {
-        main: indigo[400],
-      },
-      secondary: {
-        main: indigo[700],
-      },
-    },
-  })
+  const theme = getTheme(themeMode)
 
   const changeMode = () => {
     dispatch(changeThemeModeAC({ themeMode: themeMode === 'light' ? 'dark' : 'light' }))
@@ -85,15 +75,15 @@ export const App = () => {
   return (
     <div className="app">
       <ThemeProvider theme={theme}>
-        <CssBaseline />
+        <CssBaseline/>
         <AppBar position="static">
           <Toolbar>
             <Container maxWidth="lg" sx={containerSx}>
               <IconButton color="inherit">
-                <MenuIcon />
+                <MenuIcon/>
               </IconButton>
               <div>
-                <Switch onChange={changeMode} />
+                <Switch onChange={changeMode}/>
                 <NavButton>Sign in</NavButton>
                 <NavButton>Sign up</NavButton>
                 <NavButton background={theme.palette.info.light}>Faq</NavButton>
@@ -106,7 +96,7 @@ export const App = () => {
             <Typography variant={'h6'} fontWeight={700}>
               Добавить тудулист:
             </Typography>
-            <AddItemForm addItem={createTodolist} />
+            <AddItemForm addItem={createTodolist}/>
           </Grid>
           <Grid container spacing={4}>
             {todolists?.map(tl => {
