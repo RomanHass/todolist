@@ -2,9 +2,9 @@ import TextField from '@mui/material/TextField'
 import { ChangeEvent, useState } from 'react'
 
 type PropsType = {
-  className?: string
   oldTitle: string
   updateItemTitle: (title: string) => void
+  className?: string
 }
 
 export const EditableSpan = ({ className, oldTitle, updateItemTitle }: PropsType) => {

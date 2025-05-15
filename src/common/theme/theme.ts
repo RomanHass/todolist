@@ -1,6 +1,6 @@
-import { createTheme } from "@mui/material/styles";
-import { indigo } from "@mui/material/colors";
-import { ThemeMode } from "../../app/app-reducer.ts";
+import { createTheme } from '@mui/material/styles';
+import { indigo } from '@mui/material/colors';
+import type { ThemeMode } from '@/app/app-reducer.ts';
 
 export const getTheme = (themeMode: ThemeMode) => {
   return createTheme({

@@ -1,4 +1,4 @@
-import { FilterValuesType } from '../components/Todolist'
+import { FilterValues } from '../components/TodolistItem.tsx'
 import { createAction, createReducer, nanoid } from '@reduxjs/toolkit'
 
 export const createTodolistAC = createAction('todolists/createTodolist', (title: string) => {
@@ -6,7 +6,7 @@ export const createTodolistAC = createAction('todolists/createTodolist', (title:
 })
 export const deleteTodolistAC = createAction<{ id: string }>('todolists/deleteTodolist')
 export const changeTodolistTitleAC = createAction<{ id: string; title: string }>('todolists/updateTodolistTitle')
-export const changeTodolistFilterAC = createAction<{ id: string; newFilterValue: FilterValuesType }>(
+export const changeTodolistFilterAC = createAction<{ id: string; newFilterValue: FilterValues }>(
   'todolists/changeTodolistFilter',
 )
 
@@ -38,5 +38,5 @@ export const todolistsReducer = createReducer(initialState, builder => {
 export type Todolist = {
   id: string
   title: string
-  filter: FilterValuesType
+  filter: FilterValues
 }
