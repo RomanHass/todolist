@@ -1,14 +1,14 @@
-import { Task } from './Task'
 import Button from '@mui/material/Button'
-import { Box, List } from '@mui/material'
+import { Box } from '@mui/material'
 import { containerSx } from './Todolist.styles'
 import { changeTodolistFilterAC, type Todolist } from '@/model/todolists-reducer.ts';
 import { useAppSelector } from '@/common/hooks/useAppSelector.ts';
 import { selectTasks } from '@/model/tasks-selectors.ts';
-import { createTaskAC, deleteTaskAC } from '@/model/tasks-reducer.ts';
+import { createTaskAC } from '@/model/tasks-reducer.ts';
 import { useAppDispatch } from '@/common/hooks/useAppDispatch.ts';
 import { TodolistTitle } from '@/components/TodolistTitle.tsx';
 import { CreateItemForm } from '@/components/CreateItemForm.tsx';
+import { Tasks } from '@/components/Tasks.tsx';
 
 export const TodolistItem = ({ todolist }: Props) => {
   const { id: todolistId, filter } = todolist
@@ -26,43 +26,11 @@ export const TodolistItem = ({ todolist }: Props) => {
 
   let todolistTasks = tasks[todolistId]
 
-  const getFilteredTasks = () => {
-    switch (filter) {
-      case 'completed': {
-        return todolistTasks.filter(t => t.isDone)
-      }
-      case 'active': {
-        return todolistTasks.filter(t => !t.isDone)
-      }
-      default:
-        return todolistTasks
-    }
-  }
-
-  let filteredTasks = getFilteredTasks()
-
-  const tasksForTodolist = filteredTasks.map(t => {
-    const deleteTaskHandler = () => {
-      dispatch(deleteTaskAC({ todolistId, taskId: t.id }))
-    }
-
-    return (
-      <Task
-        key={t.id}
-        id={t.id}
-        todolistId={todolistId}
-        isDone={t.isDone}
-        title={t.title}
-        deleteTask={deleteTaskHandler}
-      />
-    )
-  })
-
   return (
     <div>
       <TodolistTitle todolist={todolist}/>
       <CreateItemForm addItem={createTaskHandler}/>
-      {todolistTasks.length === 0 ? <p>Тасок нет</p> : <List>{tasksForTodolist}</List>}
+      {todolistTasks.length === 0 ? <p>Тасок нет</p> : <Tasks todolist={todolist}/>}
       <Box sx={containerSx}>
         <Button
           variant="contained"
@@ -93,5 +61,5 @@ export const TodolistItem = ({ todolist }: Props) => {
 export type FilterValues = 'all' | 'active' | 'completed'
 
 type Props = {
-  todolist: Todolist,
+  todolist: Todolist
 }
