@@ -1,47 +1,27 @@
 import { Task } from './Task'
 import { AddItemForm } from './AddItemForm'
-import { EditableSpan } from './EditableSpan'
 import Button from '@mui/material/Button'
-import { Box, IconButton, List, Typography } from '@mui/material'
-import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
+import { Box, List } from '@mui/material'
 import { containerSx } from './Todolist.styles'
-import {
-  changeTodolistFilterAC,
-  changeTodolistTitleAC,
-  deleteTodolistAC,
-  type Todolist
-} from '@/model/todolists-reducer.ts';
+import { changeTodolistFilterAC, type Todolist } from '@/model/todolists-reducer.ts';
 import { useAppSelector } from '@/common/hooks/useAppSelector.ts';
 import { selectTasks } from '@/model/tasks-selectors.ts';
 import { createTaskAC, deleteTaskAC } from '@/model/tasks-reducer.ts';
 import { useAppDispatch } from '@/common/hooks/useAppDispatch.ts';
+import { TodolistTitle } from '@/components/TodolistTitle.tsx';
 
-export type FilterValues = 'all' | 'active' | 'completed'
-
-type PropsType = {
-  todolist: Todolist,
-}
-
-export const TodolistItem = ({todolist}: PropsType) => {
-  const {id: todolistId, title, filter} = todolist
+export const TodolistItem = ({ todolist }: Props) => {
+  const { id: todolistId, filter } = todolist
   const tasks = useAppSelector(selectTasks)
 
   const dispatch = useAppDispatch()
 
-  const deleteTodolistHandler = () => {
-    dispatch(deleteTodolistAC({id: todolistId}))
-  }
-
   const createTaskHandler = (title: string) => {
-    dispatch(createTaskAC({todolistId, title}))
+    dispatch(createTaskAC({ todolistId, title }))
   }
 
   const changeFilterHandler = (newFilterValue: FilterValues) => {
-    dispatch(changeTodolistFilterAC({id: todolistId, newFilterValue}))
-  }
-
-  const changeTodolistTitleHandler = (title: string) => {
-    dispatch(changeTodolistTitleAC({id: todolistId, title}))
+    dispatch(changeTodolistFilterAC({ id: todolistId, newFilterValue }))
   }
 
   let todolistTasks = tasks[todolistId]
@@ -80,15 +60,8 @@ export const TodolistItem = ({todolist}: PropsType) => {
 
   return (
     <div>
-      <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', columnGap: '10px' }}>
-        <Typography variant="h6" fontWeight={700}>
-          <EditableSpan oldTitle={title} updateItemTitle={changeTodolistTitleHandler} className={'title'} />
-        </Typography>
-        <IconButton onClick={deleteTodolistHandler}>
-          <DeleteForeverIcon />
-        </IconButton>
-      </Box>
-      <AddItemForm addItem={createTaskHandler} />
+      <TodolistTitle todolist={todolist}/>
+      <AddItemForm addItem={createTaskHandler}/>
       {todolistTasks.length === 0 ? <p>Тасок нет</p> : <List>{tasksForTodolist}</List>}
       <Box sx={containerSx}>
         <Button
@@ -115,4 +88,10 @@ export const TodolistItem = ({todolist}: PropsType) => {
       </Box>
     </div>
   )
+}
+
+export type FilterValues = 'all' | 'active' | 'completed'
+
+type Props = {
+  todolist: Todolist,
 }

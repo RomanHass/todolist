@@ -9,15 +9,13 @@ export const Todolists = () => {
 
   return (
     <>
-      {todolists?.map(tl => {
-        return (
-          <Grid key={tl.id}>
-            <Paper elevation={5} sx={{ p: '15px' }}>
-              <TodolistItem todolist={tl}/>
-            </Paper>
-          </Grid>
-        )
-      })}
+      {todolists?.map(tl => (
+        <Grid key={tl.id}>
+          <Paper elevation={5} sx={{ p: '15px' }}>
+            <TodolistItem todolist={tl}/>
+          </Paper>
+        </Grid>
+      ))}
     </>
   )
 }
