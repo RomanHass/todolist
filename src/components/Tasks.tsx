@@ -1,18 +1,15 @@
-import { List } from '@mui/material';
-import { deleteTaskAC } from '@/model/tasks-reducer.ts';
-import { Task } from '@/components/Task.tsx';
-import { useAppDispatch } from '@/common/hooks/useAppDispatch.ts';
+import { List, Typography } from '@mui/material';
+import { TaskItem } from '@/components/Task.tsx';
 import { useAppSelector } from '@/common/hooks/useAppSelector.ts';
 import { selectTasks } from '@/model/tasks-selectors.ts';
 import type { Todolist } from '@/model/todolists-reducer.ts';
 
 export const Tasks = ({ todolist }: Props) => {
-  const {id: todolistId, filter} = todolist
+  const { id: todolistId, filter } = todolist
 
   const tasks = useAppSelector(selectTasks)
-  const dispatch = useAppDispatch()
 
-  let todolistTasks = tasks[todolistId]
+  const todolistTasks = tasks[todolistId]
 
   const getFilteredTasks = () => {
     switch (filter) {
@@ -31,22 +28,17 @@ export const Tasks = ({ todolist }: Props) => {
 
   return (
     <List>
-      {filteredTasks.map(t => {
-        const deleteTaskHandler = () => {
-          dispatch(deleteTaskAC({ todolistId, taskId: t.id }))
-        }
-
-        return (
-          <Task
-            key={t.id}
-            id={t.id}
-            todolistId={todolistId}
-            isDone={t.isDone}
-            title={t.title}
-            deleteTask={deleteTaskHandler}
-          />
-        )
-      })}
+      {filteredTasks.length === 0
+        ? <Typography variant={'inherit'}>Тасок нет</Typography>
+        : filteredTasks.map(t => {
+          return (
+            <TaskItem
+              key={t.id}
+              task={t}
+              todolistId={todolistId}
+            />
+          )
+        })}
     </List>
   )
 }

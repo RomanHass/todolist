@@ -4,34 +4,39 @@ import Checkbox from '@mui/material/Checkbox'
 import { Box, IconButton, ListItem } from '@mui/material'
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
 import { getListItemSx } from './Todolist.styles'
-import { changeTaskStatusAC, changeTaskTitleAC, TaskType } from '../model/tasks-reducer'
+import { changeTaskStatusAC, changeTaskTitleAC, deleteTaskAC, type Task } from '../model/tasks-reducer'
 import { useAppDispatch } from '@/common/hooks/useAppDispatch.ts';
 
-type PropsType = TaskType & {
-  todolistId: string
-  deleteTask: () => void
-}
-
-export const Task = ({ todolistId, id, isDone, title, deleteTask }: PropsType) => {
+export const TaskItem = ({ todolistId, task }: Props) => {
+  const { id, isDone, title } = task
   const dispatch = useAppDispatch()
 
-  const changeTaskStatus = (e: ChangeEvent<HTMLInputElement>) => {
+  const deleteTaskHandler = () => {
+    dispatch(deleteTaskAC({ todolistId, taskId: id }))
+  }
+
+  const changeTaskStatusHandler = (e: ChangeEvent<HTMLInputElement>) => {
     dispatch(changeTaskStatusAC({ todolistId, taskId: id, isDone: e.currentTarget.checked }))
   }
 
-  const changeTaskTitle = (title: string) => {
+  const changeTaskTitleHandler = (title: string) => {
     dispatch(changeTaskTitleAC({ todolistId, taskId: id, title }))
   }
 
   return (
     <ListItem disablePadding>
-      <Checkbox size="small" checked={isDone} onChange={changeTaskStatus} />
+      <Checkbox size="small" checked={isDone} onChange={changeTaskStatusHandler}/>
       <Box sx={getListItemSx(isDone)}>
-        <EditableSpan oldTitle={title} updateItemTitle={changeTaskTitle} />
+        <EditableSpan oldTitle={title} updateItemTitle={changeTaskTitleHandler}/>
       </Box>
-      <IconButton onClick={deleteTask}>
-        <DeleteForeverIcon />
+      <IconButton onClick={deleteTaskHandler}>
+        <DeleteForeverIcon/>
       </IconButton>
     </ListItem>
   )
+}
+
+type Props = {
+  task: Task
+  todolistId: string
 }
