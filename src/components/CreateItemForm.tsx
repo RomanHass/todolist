@@ -7,7 +7,7 @@ export type PropsType = {
   addItem: (title: string) => void
 }
 
-export const AddItemForm = ({ addItem }: PropsType) => {
+export const CreateItemForm = ({ addItem }: PropsType) => {
   const [inputValue, setInputValue] = useState('')
   const [error, setError] = useState<null | string>(null)
 

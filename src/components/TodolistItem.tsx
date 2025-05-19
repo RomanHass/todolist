@@ -1,5 +1,4 @@
 import { Task } from './Task'
-import { AddItemForm } from './AddItemForm'
 import Button from '@mui/material/Button'
 import { Box, List } from '@mui/material'
 import { containerSx } from './Todolist.styles'
@@ -9,6 +8,7 @@ import { selectTasks } from '@/model/tasks-selectors.ts';
 import { createTaskAC, deleteTaskAC } from '@/model/tasks-reducer.ts';
 import { useAppDispatch } from '@/common/hooks/useAppDispatch.ts';
 import { TodolistTitle } from '@/components/TodolistTitle.tsx';
+import { CreateItemForm } from '@/components/CreateItemForm.tsx';
 
 export const TodolistItem = ({ todolist }: Props) => {
   const { id: todolistId, filter } = todolist
@@ -61,7 +61,7 @@ export const TodolistItem = ({ todolist }: Props) => {
   return (
     <div>
       <TodolistTitle todolist={todolist}/>
-      <AddItemForm addItem={createTaskHandler}/>
+      <CreateItemForm addItem={createTaskHandler}/>
       {todolistTasks.length === 0 ? <p>Тасок нет</p> : <List>{tasksForTodolist}</List>}
       <Box sx={containerSx}>
         <Button

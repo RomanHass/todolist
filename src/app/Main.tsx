@@ -1,6 +1,6 @@
 import Grid from '@mui/material/Grid';
 import { Typography } from '@mui/material';
-import { AddItemForm } from '@/components/AddItemForm.tsx';
+import { CreateItemForm } from '@/components/CreateItemForm.tsx';
 import Container from '@mui/material/Container';
 import { createTodolistAC } from '@/model/todolists-reducer.ts';
 import { useAppDispatch } from '@/common/hooks/useAppDispatch.ts';
@@ -19,7 +19,7 @@ export const Main = () => {
         <Typography variant={'h6'} fontWeight={700}>
           Добавить тудулист:
         </Typography>
-        <AddItemForm addItem={createTodolist}/>
+        <CreateItemForm addItem={createTodolist}/>
       </Grid>
       <Grid container spacing={4}>
         <Todolists/>
