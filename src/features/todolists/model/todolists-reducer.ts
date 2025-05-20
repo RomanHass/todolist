@@ -1,4 +1,4 @@
-import { FilterValues } from '../components/TodolistItem.tsx'
+import { FilterValues } from '../ui/Todolists/TodolistItem/TodolistItem.tsx'
 import { createAction, createReducer, nanoid } from '@reduxjs/toolkit'
 
 export const createTodolistAC = createAction('todolists/createTodolist', (title: string) => {

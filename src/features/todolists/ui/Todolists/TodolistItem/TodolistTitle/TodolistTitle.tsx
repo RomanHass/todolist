@@ -1,7 +1,7 @@
 import { Box, IconButton, Typography } from '@mui/material';
-import { EditableSpan } from '@/components/EditableSpan.tsx';
+import { EditableSpan } from '@/common/components/EditableSpan/EditableSpan.tsx';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
-import { changeTodolistTitleAC, deleteTodolistAC, Todolist } from '@/model/todolists-reducer.ts';
+import { changeTodolistTitleAC, deleteTodolistAC, Todolist } from '@/features/todolists/model/todolists-reducer.ts';
 import { useAppDispatch } from '@/common/hooks/useAppDispatch.ts';
 
 export const TodolistTitle = ({ todolist }: Props) => {

@@ -1,11 +1,16 @@
 import { ChangeEvent } from 'react'
-import { EditableSpan } from './EditableSpan'
+import { EditableSpan } from '@/common/components/EditableSpan/EditableSpan.tsx'
 import Checkbox from '@mui/material/Checkbox'
 import { Box, IconButton, ListItem } from '@mui/material'
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
-import { getListItemSx } from './Todolist.styles'
-import { changeTaskStatusAC, changeTaskTitleAC, deleteTaskAC, type Task } from '../model/tasks-reducer'
-import { useAppDispatch } from '@/common/hooks/useAppDispatch.ts';
+import {
+  changeTaskStatusAC,
+  changeTaskTitleAC,
+  deleteTaskAC,
+  type Task
+} from '@/features/todolists/model/tasks-reducer.ts'
+import { getListItemSx } from './TaskItem.styles.ts'
+import { useAppDispatch } from '@/common/hooks/useAppDispatch.ts'
 
 export const TaskItem = ({ todolistId, task }: Props) => {
   const { id, isDone, title } = task

@@ -1,10 +1,10 @@
 import Grid from '@mui/material/Grid';
 import { Typography } from '@mui/material';
-import { CreateItemForm } from '@/components/CreateItemForm.tsx';
+import { CreateItemForm } from '@/common/components/CreateItemForm/CreateItemForm.tsx';
 import Container from '@mui/material/Container';
-import { createTodolistAC } from '@/model/todolists-reducer.ts';
+import { createTodolistAC } from '@/features/todolists/model/todolists-reducer.ts';
 import { useAppDispatch } from '@/common/hooks/useAppDispatch.ts';
-import { Todolists } from '@/Todolsits.tsx';
+import { Todolists } from '@/features/todolists/ui/Todolists/Todolsits.tsx';
 
 export const Main = () => {
   const dispatch = useAppDispatch()

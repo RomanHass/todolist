@@ -1,8 +1,8 @@
 import { List, Typography } from '@mui/material';
-import { TaskItem } from '@/components/Task.tsx';
+import { TaskItem } from './TaskItem/TaskItem.tsx';
 import { useAppSelector } from '@/common/hooks/useAppSelector.ts';
-import { selectTasks } from '@/model/tasks-selectors.ts';
-import type { Todolist } from '@/model/todolists-reducer.ts';
+import { selectTasks } from '@/features/todolists/model/tasks-selectors.ts';
+import type { Todolist } from '@/features/todolists/model/todolists-reducer.ts';
 
 export const Tasks = ({ todolist }: Props) => {
   const { id: todolistId, filter } = todolist
