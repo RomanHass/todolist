@@ -12,14 +12,14 @@ type Props = {
 export const FilterButton = ({ filter, currentFilter, id }: Props) => {
   const dispatch = useAppDispatch()
 
-  const changeFilterHandler = (filter: FilterValues) => {
+  const changeFilterHandler = () => {
     dispatch(changeTodolistFilterAC({ id, newFilterValue: filter }))
   }
   return (
     <Button
       variant={currentFilter === filter ? 'contained' : 'outlined'}
       color={currentFilter === filter ? 'secondary' : 'primary'}
-      onClick={() => changeFilterHandler(filter)}
+      onClick={changeFilterHandler}
     >
       {filter}
     </Button>
